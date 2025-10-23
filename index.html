@@ -6,63 +6,79 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   
-  <title>Frontend Mentor | Weather app</title>
+  <title>Weather app</title>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
   </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <script src="script.js"></script>
   <section id="start_section">Start Section</section>
+  <div class="app">
 
-  Units
+    <label class="unit-toggle">
+      <input type="checkbox" id="unitToggle"/>
+      <span class="slider"></span>
+      <span class="label-text">°C / °F</span>
+    </label>
 
-  Switch to Imperial/Metric
+    <p>
+      Wind Speed
+    
+      km/h
+      mph
+    
+      Precipitation
+    
+      Millimeters (mm)
+      Inches (in)
+    
+      How's the sky looking today?
+    </p>
 
-  Temperature
+      <div>
+        <input type="text" id="search" placeholder="Search for a place..."/>
+        <button id="searchbutton">Search</button>
+    
+      </div>
 
-  Celsius (°C)
-  Fahrenheit (°F)
+      <div class="current-location">
+        <h2 id="cityname">City Name</h2>
+        <h2 id="country">Country</h2>
+        <p id="day">Day</p>
+        <p id="date">Date</p>
+        <img src="" alt="">
+        <p>Image for Clouds / Sun here</p>
+        <div id="curr-temp">Current Temp</div>
 
-  Wind Speed
+      </div>
+    
+    
+      <div>
+        <div id="apparent-temp">Feels like</div>
+        <div id="humidity">Humidity</div>
+        <div id="wind">Wind</div>
+        <div id="precipitation">Precipitation</div>       
+      </div>
+    
+      Daily forecast
+      <!-- Insert daily forecast for the next 7 days here -->
+    
+      Hourly forecast
+      <!-- Insert hourly forecast for the selected day here -->
+  </div>
 
-  km/h
-  mph
 
-  Precipitation
 
-  Millimeters (mm)
-  Inches (in)
-
-  How's the sky looking today?
-
-  Search for a city, e.g., New York
-  Search
-
-  Feels like
-  <!-- Insert temperature here -->
-
-  Humidity
-  <!-- Insert humidity here -->
-
-  Wind
-  <!-- Insert wind here -->   
-  
-  Precipitation
-  <!-- Insert precipitation here -->
-
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
-
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
 
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="#">Olga Bessonova</a>.
   </div>
+  <script src="script.js"></script>
+
 </body>
 </html>
