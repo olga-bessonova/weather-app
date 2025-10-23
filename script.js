@@ -11,7 +11,6 @@ async function getWeather() {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        document.getElementById("start_section").textContent = JSON.stringify(data, null, 2)
         const weather = data.current
         
         date.textContent = `Date: ${weather.time}`;
@@ -27,3 +26,4 @@ async function getWeather() {
 }
 
 getWeather();
+// add geocoding search city -> coordinates
