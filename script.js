@@ -8,6 +8,7 @@ const wind = document.getElementById("wind");
 const precipitation = document.getElementById("precipitation");
 const input = document.getElementById("search");
 const searchBtn = document.getElementById("search-button");
+// const form = document.getElementById()
 
 searchBtn.addEventListener("click", () => {
     const city = input.value.trim();
@@ -15,6 +16,15 @@ searchBtn.addEventListener("click", () => {
         getCityLocation(city);
     }
 });
+
+input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const city = input.value.trim();
+      if (city) getCityLocation(city);
+    }
+  });
+  
 
 async function getCityLocation(city) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`;
