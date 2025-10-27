@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(180deg, #0f0b29 0%, #1a1447 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            color: #fbbf24;
+        }
+
+        .units-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Title */
+        .title {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px 12px 40px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-button {
+            background: #6366f1;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 12px 32px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .search-button:hover {
+            background: #5558e3;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
+
+        /* Current Weather Card */
+        .current-weather {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .date {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        .temperature-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .weather-icon-large {
+            width: 80px;
+            height: 80px;
+        }
+
+        .temperature {
+            font-size: 72px;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .decorative-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        .dot-1 { top: 30%; left: 15%; }
+        .dot-2 { top: 50%; left: 25%; }
+        .dot-3 { bottom: 25%; left: 40%; }
+
+        /* Weather Stats */
+        .weather-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: rgba(15, 11, 41, 0.5);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Daily Forecast */
+        .daily-forecast {
+            margin-top: 24px;
+        }
+
+        .forecast-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .forecast-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .day-card {
+            background: rgba(15, 11, 41, 0.5);
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+        }
+
+        .day-name {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .day-icon {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 12px;
+        }
+
+        .day-temps {
+            font-size: 13px;
+        }
+
+        .temp-high {
+            font-weight: 600;
+        }
+
+        .temp-low {
+            opacity: 0.6;
+            margin-left: 4px;
+        }
+
+        /* Hourly Forecast */
+        .hourly-forecast {
+            background: rgba(15, 11, 41, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .hourly-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .tab.active {
+            color: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #6366f1;
+        }
+
+        .hourly-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hour-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hour-time {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .hour-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        .hour-temp {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .forecast-days {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .weather-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .forecast-days {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .temperature {
+                font-size: 56px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <span>Weather Now</span>
+            </div>
+            <button class="units-toggle">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+                Units
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Title -->
+        <h1 class="title">How's the sky looking today?</h1>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search for a place...">
+            </div>
+            <button class="search-button">Search</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div>
+                <!-- Current Weather -->
+                <div class="current-weather">
+                    <div class="decorative-dots">
+                        <div class="dot dot-1"></div>
+                        <div class="dot dot-2"></div>
+                        <div class="dot dot-3"></div>
+                    </div>
+                    
+                    <div class="location">Berlin, Germany</div>
+                    <div class="date">Tuesday, Aug 3, 2025</div>
+                    
+                    <div class="temperature-display">
+                        <svg class="weather-icon-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#fbbf24"/>
+                            <line x1="12" y1="1" x2="12" y2="3" stroke="#fbbf24"/>
+                            <line x1="12" y1="21" x2="12" y2="23" stroke="#fbbf24"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#fbbf24"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#fbbf24"/>
+                            <line x1="1" y1="12" x2="3" y2="12" stroke="#fbbf24"/>
+                            <line x1="21" y1="12" x2="23" y2="12" stroke="#fbbf24"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#fbbf24"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#fbbf24"/>
+                        </svg>
+                        <div class="temperature">20°</div>
+                    </div>
+
+                    <!-- Weather Stats -->
+                    <div class="weather-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Feels Like</div>
+                            <div class="stat-value">18°</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Humidity</div>
+                            <div class="stat-value">46%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Wind</div>
+                            <div class="stat-value">14 km/h</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Precipitation</div>
+                            <div class="stat-value">0 mm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Forecast -->
+                <div class="daily-forecast">
+                    <h2 class="forecast-title">Daily forecast</h2>
+                    <div class="forecast-days">
+                        <div class="day-card">
+                            <div class="day-name">Tue</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#fbbf24"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">20°</span>
+                                <span class="temp-low">14°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Wed</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">22°</span>
+                                <span class="temp-low">15°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Thu</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#fbbf24"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">24°</span>
+                                <span class="temp-low">16°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Fri</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">19°</span>
+                                <span class="temp-low">13°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Sat</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">17°</span>
+                                <span class="temp-low">12°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Sun</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#fbbf24"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">22°</span>
+                                <span class="temp-low">15°</span>
+                            </div>
+                        </div>
+                        <div class="day-card">
+                            <div class="day-name">Mon</div>
+                            <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            <div class="day-temps">
+                                <span class="temp-high">24°</span>
+                                <span class="temp-low">16°</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hourly Forecast -->
+            <div class="hourly-forecast">
+                <div class="hourly-tabs">
+                    <button class="tab active">Hourly forecast</button>
+                    <button class="tab">Nearby</button>
+                </div>
+                <div class="hourly-list">
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            3 PM
+                        </div>
+                        <div class="hour-temp">20°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            4 PM
+                        </div>
+                        <div class="hour-temp">19°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            5 PM
+                        </div>
+                        <div class="hour-temp">18°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#94a3b8" stroke="#94a3b8"/>
+                            </svg>
+                            6 PM
+                        </div>
+                        <div class="hour-temp">17°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#64748b" stroke="#64748b"/>
+                            </svg>
+                            7 PM
+                        </div>
+                        <div class="hour-temp">16°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#64748b" stroke="#64748b"/>
+                            </svg>
+                            8 PM
+                        </div>
+                        <div class="hour-temp">15°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#64748b" stroke="#64748b"/>
+                            </svg>
+                            9 PM
+                        </div>
+                        <div class="hour-temp">13°</div>
+                    </div>
+                    <div class="hour-item">
+                        <div class="hour-time">
+                            <svg class="hour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="4" fill="#475569" stroke="#475569"/>
+                            </svg>
+                            10 PM
+                        </div>
+                        <div class="hour-temp">12°</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

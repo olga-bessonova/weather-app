@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'DM Sans';
+  src: url('./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('./assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
 .unit-toggle {
     display: inline-flex;
     align-items: center;
@@ -36,5 +56,18 @@
   
   input:checked + .slider {
     background: #007bff;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+
   }
   
