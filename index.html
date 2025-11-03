@@ -8,7 +8,6 @@
   
   <title>Weather app</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
@@ -27,58 +26,71 @@
       </label>
     </header>
 
-    <p>
-      Wind Speed
-    
-      km/h
-      mph
-    
-      Precipitation
-    
-      Millimeters (mm)
-      Inches (in)
-    
-      How's the sky looking today?
-    </p>
+    <h1 class="title">How's the sky looking today?</h1>
 
+    <div class="search-container">
       <form id="searh-form">
         <input type="text" id="search" placeholder="Enter city..."/>
         <button id="search-button">Search</button>
       </form>
+    </div>
 
-      <div class="current-location">
-        <h2 id="cityname">City Name</h2>
-        <h2 id="country">Country</h2>
-        <p id="day">Day</p>
-        <p id="date">Date</p>
-        <img src="" alt="">
-        <p>Image for Clouds / Sun here</p>
-        <div id="curr-temp">Current Temp</div>
+    <div class="weather-grid">
+      <div class="weather-grid-left">
+        <div class="current-weather">
+          <div class="current-weather-info">
+            <h4 id="cityname">City Name</h4>
+            <p id="current-date">Tuesday, Aug 5, 2025</p>
+          </div>
 
+          <div class="weather-status">
+            <img src="./assets/images/icon-sunny.webp" alt="" class="weather-status-icon">
+            <span id="curr-temp"></span>
+          </div>
+        </div>
+
+        <!-- Weather details for the current day -->
+        <div class="day-details-grid">
+          <div class="day-detail"><div class="day-detail-label">Feels like</div><div class="day-detail-value" id="apparent-temp"></div></div>
+          <div class="day-detail"><div class="day-detail-label">Humidity</div><div class="day-detail-value" id="humidity"></div></div>
+          <div class="day-detail"><div class="day-detail-label">Wind</div><div class="day-detail-value" id="wind"></div></div>
+          <div class="day-detail"><div class="day-detail-label">Precipitation</div><div class="day-detail-value" id="precipitation"></div></div>
+        </div>
+
+        <!-- Weather for several days -->
+        
+        <h3 class="section-header">Daily forecast</h3>
+        <div class="daily-grid">
+          <div class="day"><div class="day-name" id="day-name-1">Tue</div><div>Cloud pic</div><div>Temp Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-2">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-3">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-4">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-5">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-6">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+          <div class="day"><div class="day-name" id="day-name-7">Tue</div><div>Cloud pic</div><div>Temp</div></div>
+
+        </div>
       </div>
-    
-    
-      <div>
-        <div id="apparent-temp">Feels like</div>
-        <div id="humidity">Humidity</div>
-        <div id="wind">Wind</div>
-        <div id="precipitation">Precipitation</div>       
+      <div class="weather-grid-right">
+        <div class="right-header">
+          <h3 class="section-header">Hourly forecast</h3>
+          dropdown
+        </div>
+
+        <div id="hourly-container" class="hourly-scroll"></div>
       </div>
+    </div>
+
     
-      Daily forecast
-      <!-- Insert daily forecast for the next 7 days here -->
-    
-      Hourly forecast
-      <!-- Insert hourly forecast for the selected day here -->
   </div>
-
 
 
 
   <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Olga Bessonova</a>.
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>   
+    Coded by <a href="https://olgabessonova.com/" target="_blank">Olga Bessonova</a>
   </div>
+
   <script src="script.js"></script>
 
 </body>

@@ -1,6 +1,5 @@
 const cityname = document.getElementById("cityname");
-const countryname = document.getElementById("country");
-const date = document.getElementById("date");
+const date = document.getElementById("current-date");
 const currTemp = document.getElementById("curr-temp"); 
 const apparentTemp = document.getElementById("apparent-temp"); 
 const humidity = document.getElementById('humidity');
@@ -24,6 +23,16 @@ input.addEventListener("keydown", (e) => {
       if (city) getCityLocation(city);
     }
   });
+
+function weatherIcon(code){
+    if (code === 0) return "☀️";
+    if (code >= 1 && code <= 3) return "⛅️"; // Partly cloudy
+    if (code >= 45 && code <= 48) return "🌫"; // Fog
+    if (code >= 51 && code <= 67) return "🌧"; // Drizzle
+    if (code >= 80 && code <= 82) return "🌦"; // Rain showers
+    if (code >= 95) return "⛈";            // Thunderstorm
+    return "❓";
+}
   
 
 async function getCityLocation(city) {
@@ -52,27 +61,81 @@ async function getCityLocation(city) {
 
 async function getWeather(lat=52.52, long=13.41, cityName="Berlin", country="Germany") {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,wind_direction_10m`
-
+console.log(url)
     try {
         const response = await fetch(url);
         const data = await response.json();
         const weather = data.current;
-        cityname.textContent = cityName;
-        countryname.textContent = country;
+        cityname.textContent = `${cityName}, ${country}`;
         
-        date.textContent = `Date: ${weather.time}`;
-        currTemp.textContent = `Temp: ${weather.temperature_2m}`;
-        apparentTemp.textContent = `Feels like: ${weather.apparent_temperature}`;
-        humidity.textContent = `Humidity: ${weather.relative_humidity_2m}`;
-        wind.textContent = `Wind: ${weather.wind_speed_10m} km/h`;
-        precipitation.textContent = `Precipitation: ${weather.precipitation}`;
-
+        currTemp.textContent = `${Math.round(weather.temperature_2m)}°`;
+        apparentTemp.textContent = `${Math.floor(weather.apparent_temperature)}°`;
+        humidity.textContent = `${weather.relative_humidity_2m}`;
+        wind.textContent = `${Math.round(weather.wind_speed_10m)} km/h`;
+        precipitation.textContent = `${weather.precipitation}`;
+        const weatherDate = new Date(weather.time);
+        dateFormatted = weatherDate.toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+        
+        date.textContent = `${dateFormatted}`;
     } catch(error) {
         console.error("Error fetching weather data: ", error)
     }
 }
 
+const hourlyContainer = document.getElementById('hourly-container');
+
+async function hourlyWeather() {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,weathercode&timezone=auto`
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        const times = data.hourly.time;
+        const weatherCodes = data.hourly.weathercode;
+        console.log(weatherCodes.slice(0,24))
+        const temperatures = data.hourly.temperature_2m;
+        
+        hourlyContainer.innerHTML = '';
+        
+        // Create 24 hourly data
+        for(let i=0; i<24; i++){
+            const time = new Date(times[i]);
+            const hourLabel = time.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                hour12: true,
+            });
+            const weatherCode = weatherCodes[i];
+            const weatherLabel = weatherIcon(weatherCode);
+            const temperature = Math.round(temperatures[i]);
+
+            const item = document.createElement('div');
+            item.className = "hour-item";
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = "hour-info";
+            infoDiv.innerHTML = `<span class="span-weather-icon">${weatherLabel}</span><span class="hour-time">${hourLabel}</span>`
+            
+            const tempDiv = document.createElement('div');
+            tempDiv.className = "hour-temp";
+            tempDiv.innerHTML = temperature;
+
+            item.appendChild(infoDiv);
+            item.appendChild(tempDiv);
+            hourlyContainer.appendChild(item);
+        }
+
+
+    } catch(error){
+        console.error("Error: couldn't fetch hourly data: ", error)
+    }
+}
 
 
 getWeather();
-// add geocoding search city -> coordinates
+hourlyWeather();
+// make sun image variable according to weather on the current temp container
