@@ -16,3 +16,9 @@ export function dateFormattedFull(date){
         year: 'numeric'
     })
 };
+
+export function dateFormattedDayShort(date){
+    return date.toLocaleDateString('en-US', {
+        weekday: 'short',
+    })
+};
