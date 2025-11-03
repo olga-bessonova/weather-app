@@ -8,3 +8,11 @@ export function weatherIcon(code){
     return "❓";
 }
 
+export function dateFormattedFull(date){
+    return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    })
+};
