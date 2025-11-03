@@ -1,6 +1,7 @@
 import { input, searchBtn } from "./domElements.js";
 import { getCityLocation, getWeather } from "./api.js";
-import { hourlyWeather } from "./hourly.js";
+import { weatherHourly } from "./weatherHourly.js";
+import { weatherCurrently } from "./weatherCurrently.js";
 
 searchBtn.addEventListener("click", () => {
     const city = input.value.trim();
@@ -17,5 +18,16 @@ input.addEventListener("keydown", (e) => {
     }
   });
 
-getWeather();
-hourlyWeather();
+async function loadWeather() {
+    const cityName = "Berlin";
+    const country = "Germany";
+    const data = await getWeather();
+    if (data && data.current){
+        weatherCurrently(data.current, cityName, country);
+    };
+    if (data && data.hourly){
+        weatherHourly(data.current, cityName, country);
+    }
+};
+
+loadWeather();

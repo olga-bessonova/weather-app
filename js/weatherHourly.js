@@ -1,7 +1,7 @@
 import { hourlyContainer } from "./domElements.js";
 import { weatherIcon } from "./utils.js";
 
-export async function hourlyWeather() {
+export async function weatherHourly() {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,weathercode&timezone=auto`
     try {
         const response = await fetch(url);
