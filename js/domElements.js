@@ -10,3 +10,5 @@ export const searchBtn = document.getElementById("search-button");
 export const hourlyContainer = document.getElementById("hourly-container");
 export const dailyContainer = document.getElementById("daily-container");
 export const daySelect = document.getElementById("day-select");
+export const unitToggle = document.getElementById("unitToggle"); 
+export const weatherStatus = document.getElementById("weather-status-id")

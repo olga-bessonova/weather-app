@@ -19,8 +19,8 @@ export async function weatherDaily(weather){
         dayName.textContent = dateFormattedDayShort(day);
 
         const weatherImg = document.createElement("div");
-        weatherIcon.className = 'daily-weather-icon';
-        weatherImg.textContent = weatherIcon(weathercode[i]);
+        weatherImg.className = 'daily-weather-icon';
+        weatherImg.innerHTML = weatherIcon(weathercode[i]);
         
         const temp = document.createElement('div');
         temp.className = 'daily-temp';
