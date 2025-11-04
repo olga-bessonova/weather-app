@@ -1,4 +1,4 @@
-import { input, searchBtn } from "./domElements.js";
+import { input, searchBtn, daySelect } from "./domElements.js";
 import { getCityLocation, getWeather } from "./api.js";
 import { weatherHourly } from "./weatherHourly.js";
 import { weatherCurrently } from "./weatherCurrently.js";
@@ -19,6 +19,8 @@ input.addEventListener("keydown", (e) => {
     }
   });
 
+let data = null;
+
 async function loadWeather() {
     const cityName = "Berlin";
     const country = "Germany";
@@ -30,7 +32,12 @@ async function loadWeather() {
         weatherDaily(data.daily);
     }
     if (data && data.hourly){
-        weatherHourly(data.hourly);
+        weatherHourly(data.hourly, data.daily, 0);
     }
+
+    daySelect.addEventListener("change", e => {
+      const dayIndex = Number(e.target.value);
+      weatherHourly(data.hourly, data.daily, dayIndex);
+    });
 };
 loadWeather();

@@ -1,17 +1,43 @@
-import { hourlyContainer } from "./domElements.js";
-import { weatherIcon } from "./utils.js";
+import { hourlyContainer, daySelect } from "./domElements.js";
+import { weatherIcon, dateFormattedDayLong } from "./utils.js";
 
-export async function weatherHourly(weather) {
+export async function weatherHourly(weatherHourly, weatherDaily, dayIndex = 0) {
+    const weekDaysDate = weatherDaily.time;
+    const weekDays = [];
+
+    for (let i=0; i<weekDaysDate.length; i++){
+        let date = new Date(weekDaysDate[i]);
+        weekDays.push(dateFormattedDayLong(date));
+    }
+    console.log(weekDays);
+
+    const selectedDay = new Date(weatherDaily.time[dayIndex]);
+    const selectedDateStr = selectedDay.toISOString().split("T")[0];
+    const times = weatherHourly.time;
+
+    // Find all hours that belong to that day
+    const filteredIndices = times
+        .map((t, i) => ({ t, i }))
+        .filter(obj => obj.t.startsWith(selectedDateStr))
+        .map(obj => obj.i);
         
-    const times = weather.time;
-    const weatherCodes = weather.weathercode;
-    console.log(weatherCodes.slice(0,24))
-    const temperatures = weather.temperature_2m;
+    const weatherCodes = weatherHourly.weathercode;
+    // console.log(weatherCodes.slice(0,24))
+    const temperatures = weatherHourly.temperature_2m;
 
+    daySelect.innerHTML = ''; 
+
+    weekDays.forEach((day, i) => {
+        const option = document.createElement('option');
+        option.value = i; 
+        option.textContent = day; 
+        daySelect.appendChild(option);
+    });
+    console.log(daySelect);
+    
     hourlyContainer.innerHTML = '';
 
-    // Create 24 hourly data
-    for(let i=0; i<24; i++){
+    for (let i of filteredIndices) {
         const time = new Date(times[i]);
         const hourLabel = time.toLocaleTimeString('en-US', {
             hour: 'numeric',

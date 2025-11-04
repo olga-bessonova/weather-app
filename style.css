@@ -450,4 +450,14 @@ body {
   margin: 5px;
 }
 
-
+#day-select {
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  background: #1a1f3a;
+  color: white;
+  border-radius: 15px;
+  padding: 8px;
+  margin: 10px;
+}

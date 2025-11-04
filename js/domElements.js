@@ -8,4 +8,5 @@ export const precipitation = document.getElementById("precipitation");
 export const input = document.getElementById("search");
 export const searchBtn = document.getElementById("search-button");
 export const hourlyContainer = document.getElementById("hourly-container");
-export const dailyContainer = document.getElementById("daily-container")
+export const dailyContainer = document.getElementById("daily-container");
+export const daySelect = document.getElementById("day-select");
