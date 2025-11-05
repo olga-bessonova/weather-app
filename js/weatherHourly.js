@@ -1,7 +1,7 @@
 import { hourlyContainer } from "./domElements.js";
 import { weatherIcon } from "./utils.js";
 
-export async function weatherHourly(weatherHourly, selectedDateStr) {
+export async function weatherHourly(weatherHourly, selectedDateStr, isMetric = true) {
     hourlyContainer.innerHTML = '';
 
     const now = new Date();

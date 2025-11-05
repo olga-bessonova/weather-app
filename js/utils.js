@@ -40,3 +40,15 @@ export function dateFormattedDayLong(dateStr){
         day: 'numeric',
     })
 };
+
+export function convertTemp(celsius){
+    return Math.round(celsius * 9/5 + 32)
+};
+
+export function convertSpeed(kmh){
+    return Math.round(kmh * 0.621371)
+};
+
+export function convertPrecipitation(mm){
+    return Math.round(mm * 0.0393701)
+};

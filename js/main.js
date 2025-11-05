@@ -6,11 +6,13 @@ import { weatherCurrently } from "./weatherCurrently.js";
 import { weatherDaily } from "./weatherDaily.js"
 
 let data = null;
+let isMetric = true;
+
 async function loadWeather() {
     data = await getWeather();
     const { cityName, country, current, daily, hourly } = data;
-    if (current) weatherCurrently(current, daily, cityName, country);
-    if (daily) weatherDaily(daily);
+    if (current) weatherCurrently(current, daily, cityName, country, isMetric);
+    if (daily) weatherDaily(daily, isMetric);
 
     daySelect.innerHTML = '';
     daily.time.forEach(dateStr => {
@@ -21,10 +23,10 @@ async function loadWeather() {
       });
 
     daySelect.value = daily.time[0];
-    weatherHourly(hourly, daySelect.value)
+    weatherHourly(hourly, daySelect.value, isMetric)
 
     daySelect.addEventListener("change", e => {
-        weatherHourly(hourly, e.target.value);
+        weatherHourly(hourly, e.target.value, isMetric);
     });
 
     searchBtn.addEventListener("click", () => {
@@ -42,8 +44,17 @@ async function loadWeather() {
         }
     });
 
+    function metrics() {
+        console.log("isMetric: ", isMetric)
+        weatherCurrently(current, daily, cityName, country, isMetric);
+        weatherDaily(daily, isMetric);
+        const selectedDate = daySelect.value || data.daily.time[0];
+        weatherHourly(hourly, selectedDate, isMetric);
+    }
+
     unitToggle.addEventListener("change", () => {
-        isCelcius 
+        isMetric = !isMetric;
+        metrics();
     })
 
 };
