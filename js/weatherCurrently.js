@@ -17,7 +17,7 @@ export function weatherCurrently(weather, dailyWeather, cityName, country, isMet
 
     precipitation.textContent = isMetric ? `${weather.precipitation} mm` :
     `${convertPrecipitation(weather.precipitation)} in`;
-    
+
     const weatherDate = new Date(weather.time);
     date.textContent = `${dateFormattedFull(weatherDate)}`;
     weatherStatus.innerHTML = weatherIcon(dailyWeather.weathercode[0]);
@@ -25,6 +25,4 @@ export function weatherCurrently(weather, dailyWeather, cityName, country, isMet
     currTemp.textContent = isMetric ? `${Math.round(weather.temperature_2m)}°` : 
     `${convertTemp(weather.temperature_2m)}°`;
     weatherStatus.append(currTemp);
-
-
 }
