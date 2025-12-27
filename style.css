@@ -446,8 +446,10 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 50px;
+  align-items: center;
+  width: 70px;
   margin: 5px;
+  gap: 5px;
 }
 
 #day-select {
@@ -461,3 +463,59 @@ body {
   padding: 8px;
   margin: 10px;
 }
+
+.units-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.units-btn {
+  background-color: #2c2f58;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.units-menu {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background: #1c1e3b;
+  color: white;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  min-width: 200px;
+  z-index: 10;
+}
+
+.units-section {
+  margin-bottom: 10px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 8px;
+}
+
+.units-section:first-child {
+  border-top: none;
+}
+
+.units-title {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.units-menu label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.hidden {
+  display: none;
+}
+

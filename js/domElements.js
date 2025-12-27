@@ -11,4 +11,9 @@ export const hourlyContainer = document.getElementById("hourly-container");
 export const dailyContainer = document.getElementById("daily-container");
 export const daySelect = document.getElementById("day-select");
 export const unitToggle = document.getElementById("unitToggle"); 
-export const weatherStatus = document.getElementById("weather-status-id")
+export const weatherStatus = document.getElementById("weather-status-id");
+export const unitsBtn = document.getElementById("unitsBtn");
+export const unitsMenu = document.getElementById("unitsMenu");
+export const tempUnitRadios = document.querySelectorAll(
+    'input[name="tempUnit"]'
+  );

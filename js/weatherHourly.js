@@ -1,12 +1,11 @@
 import { hourlyContainer } from "./domElements.js";
-import { weatherIcon } from "./utils.js";
+import { weatherIcon, convertTemp } from "./utils.js";
 
 export async function weatherHourly(weatherHourly, selectedDateStr, isMetric = true) {
     hourlyContainer.innerHTML = '';
 
     const now = new Date();
-    const todayStr = now.toISOString().split('T')[0];
-    console.log(todayStr, "todayStr")
+    // const todayStr = now.toISOString().split('T')[0];
     
     const times = weatherHourly.time;
     const weatherCodes = weatherHourly.weathercode;
@@ -45,7 +44,7 @@ export async function weatherHourly(weatherHourly, selectedDateStr, isMetric = t
         
         const tempDiv = document.createElement('div');
         tempDiv.className = "hour-temp";
-        tempDiv.innerHTML = temperature;
+        tempDiv.innerHTML = isMetric ? `${temperature} °` : `${convertTemp(temperature)} °`;
 
         item.appendChild(infoDiv);
         item.appendChild(tempDiv);

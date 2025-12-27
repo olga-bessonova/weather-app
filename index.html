@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,weathercode&hourly=temperature_2m,weathercode&timezone=auto -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
@@ -14,7 +15,7 @@
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body>xx
   <div class="app">
     <header class="header">
       <img src="./assets/images/logo.svg" alt="">
@@ -25,6 +26,32 @@
         <span class="slider"></span>
         <span class="label-text">°F</span>
       </label>
+
+      <div class="units-dropdown">
+        <button id="unitsBtn" class="units-btn">
+          ⚙️ Units ▾
+        </button>
+        <div id="unitsMenu" class="units-menu hidden">
+          <div class="units-section">
+            <p class="units-title">Temperature</p>
+            <label><input type="radio" name="tempUnit" value="celsius" checked> Celsius (°C)</label>
+            <label><input type="radio" name="tempUnit" value="fahrenheit"> Fahrenheit (°F)</label>
+          </div>
+      
+          <div class="units-section">
+            <p class="units-title">Wind Speed</p>
+            <label><input type="radio" name="windUnit" value="kmh" checked> km/h</label>
+            <label><input type="radio" name="windUnit" value="mph"> mph</label>
+          </div>
+      
+          <div class="units-section">
+            <p class="units-title">Precipitation</p>
+            <label><input type="radio" name="precipUnit" value="mm" checked> Millimeters (mm)</label>
+            <label><input type="radio" name="precipUnit" value="in"> Inches (in)</label>
+          </div>
+        </div>
+      </div>
+      
     </header>
 
     <h1 class="title">How's the sky looking today?</h1>

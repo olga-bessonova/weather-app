@@ -3,7 +3,8 @@ import { dateFormattedDayLong } from "./utils.js";
 import { getCityLocation, getWeather } from "./api.js";
 import { weatherHourly } from "./weatherHourly.js";
 import { weatherCurrently } from "./weatherCurrently.js";
-import { weatherDaily } from "./weatherDaily.js"
+import { weatherDaily } from "./weatherDaily.js";
+import { initUnits } from "./units.js";
 
 let data = null;
 let isMetric = true;
@@ -45,12 +46,19 @@ async function loadWeather() {
     });
 
     function metrics() {
-        console.log("isMetric: ", isMetric)
+        console.log("isMetric:", isMetric);
         weatherCurrently(current, daily, cityName, country, isMetric);
         weatherDaily(daily, isMetric);
         const selectedDate = daySelect.value || data.daily.time[0];
         weatherHourly(hourly, selectedDate, isMetric);
-    }
+      }
+      
+      initUnits((newIsMetric) => {
+        if (isMetric !== newIsMetric) {
+          isMetric = newIsMetric;
+          metrics();
+        }
+      });
 
     unitToggle.addEventListener("change", () => {
         isMetric = !isMetric;

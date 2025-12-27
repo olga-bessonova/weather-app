@@ -2,6 +2,7 @@ import { dailyContainer } from "./domElements.js";
 import { dateFormattedDayShort, weatherIcon, convertTemp } from "./utils.js"
 
 export async function weatherDaily(weather, isMetric = true){
+    dailyContainer.innerHTML = '';
     const times = weather.time;
     const tempMin = weather.temperature_2m_min;
     const tempMax = weather.temperature_2m_max;
