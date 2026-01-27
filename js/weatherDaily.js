@@ -1,7 +1,7 @@
 import { dailyContainer } from "./domElements.js";
 import { dateFormattedDayShort, weatherIcon, convertTemp } from "./utils.js"
 
-export async function weatherDaily(weather, isMetric = true){
+export async function weatherDaily(weather, units){
     dailyContainer.innerHTML = '';
     const times = weather.time;
     const tempMin = weather.temperature_2m_min;
@@ -27,8 +27,8 @@ export async function weatherDaily(weather, isMetric = true){
         temp.className = 'daily-temp';
         const tempMaxSpan = document.createElement("span");
         const tempMinSpan = document.createElement("span");
-        tempMaxSpan.textContent = isMetric ? `${Math.round(tempMax[i])}°` : `${convertTemp(tempMax[i])}°`;        
-        tempMinSpan.textContent = isMetric ? `${Math.round(tempMin[i])}°` : `${convertTemp(tempMin[i])}°`;        
+        tempMaxSpan.textContent = units.temperature === 'celsius' ? `${Math.round(tempMax[i])}°C` : `${convertTemp(tempMax[i])}°F`;        
+        tempMinSpan.textContent = units.temperature === 'celsius' ? `${Math.round(tempMin[i])}°C` : `${convertTemp(tempMin[i])}°F`;        
         temp.appendChild(tempMaxSpan);        
         temp.appendChild(tempMinSpan);        
         

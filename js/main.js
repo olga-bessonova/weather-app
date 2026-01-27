@@ -7,13 +7,17 @@ import { weatherDaily } from "./weatherDaily.js";
 import { initUnits } from "./units.js";
 
 let data = null;
-let isMetric = true;
+let units = {
+    temperature: "celsius",
+    speed: "kmh",
+    precipitation: "mm"
+  };
 
 async function loadWeather() {
     data = await getWeather();
     const { cityName, country, current, daily, hourly } = data;
-    if (current) weatherCurrently(current, daily, cityName, country, isMetric);
-    if (daily) weatherDaily(daily, isMetric);
+    if (current) weatherCurrently(current, daily, cityName, country, units);
+    if (daily) weatherDaily(daily, units);
 
     daySelect.innerHTML = '';
     daily.time.forEach(dateStr => {
@@ -24,10 +28,10 @@ async function loadWeather() {
       });
 
     daySelect.value = daily.time[0];
-    weatherHourly(hourly, daySelect.value, isMetric)
+    weatherHourly(hourly, daySelect.value, units)
 
     daySelect.addEventListener("change", e => {
-        weatherHourly(hourly, e.target.value, isMetric);
+        weatherHourly(hourly, e.target.value, units);
     });
 
     searchBtn.addEventListener("click", () => {
@@ -44,26 +48,18 @@ async function loadWeather() {
             if (city) getCityLocation(city);
         }
     });
-
-    function metrics() {
-        console.log("isMetric:", isMetric);
-        weatherCurrently(current, daily, cityName, country, isMetric);
-        weatherDaily(daily, isMetric);
-        const selectedDate = daySelect.value || data.daily.time[0];
-        weatherHourly(hourly, selectedDate, isMetric);
-      }
       
-      initUnits((newIsMetric) => {
-        if (isMetric !== newIsMetric) {
-          isMetric = newIsMetric;
-          metrics();
-        }
-      });
-
-    unitToggle.addEventListener("change", () => {
-        isMetric = !isMetric;
-        metrics();
-    })
+    function renderWeather() {
+        weatherCurrently(current, daily, cityName, country, units);
+        weatherDaily(daily, units);
+        weatherHourly(hourly, daySelect.value, units);
+    }
+      
+    initUnits((partialUnits) => {
+        units = { ...units, ...partialUnits };
+        renderWeather();
+    });
+      
 
 };
 
