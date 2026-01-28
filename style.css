@@ -28,6 +28,18 @@ body {
   justify-content: center;
 }
 
+.error-message {
+  text-align: center;
+  color: white;
+  font-size: 1rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+}
+
+.error-message.hidden {
+  display: none;
+}
+
 #search {
   height: 25px;
   width: 300px;
@@ -105,13 +117,80 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 150px;
-  /* position: relative; */
+  position: relative;
   border-radius: 16px;
   padding: 2rem;
   background-image: url("./assets/images/bg-today-large.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.loading-state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(28, 30, 59, 0.9);
+  border-radius: 16px;
+  z-index: 10;
+}
+
+.loading-state.hidden {
+  display: none;
+}
+
+.loading-icon {
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state p {
+  color: white;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.section-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 200px;
+}
+
+.section-loading.hidden {
+  display: none;
+}
+
+.section-loading .loading-icon {
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+.section-loading p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 #cityname {

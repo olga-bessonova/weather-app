@@ -1,25 +1,37 @@
 import { cityname, date, currTemp, apparentTemp, humidity, wind, precipitation } from "./domElements.js";
 import { dateFormattedFull } from "./utils.js";
 
-export async function getCityLocation(city) {
+export async function getCityLocation(city, onWeatherUpdate, showLoadingFn, hideLoadingFn, showErrorFn, hideErrorFn) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`;
     console.log("url: ", url);
 
     try {
-        response = await fetch(url);
-        data = await response.json();
+        if (showLoadingFn) showLoadingFn();
+        if (hideErrorFn) hideErrorFn();
+        
+        const response = await fetch(url);
+        const data = await response.json();
 
         if (!data.results || data.results.length === 0) {
-            alert("City not found.");
+            if (hideLoadingFn) hideLoadingFn();
+            if (showErrorFn) showErrorFn();
             return;
         }
         const { latitude, longitude, name, country } = data.results[0];
 
         console.log(`Found: ${name}, ${country}, (${latitude}, ${longitude})`);
-        getWeather(latitude, longitude, name, country);
+        const weatherData = await getWeather(latitude, longitude, name, country);
+        
+        if (weatherData && onWeatherUpdate) {
+            onWeatherUpdate(weatherData);
+        } else if (hideLoadingFn) {
+            hideLoadingFn();
+        }
       
     } catch(error){
         console.error("Error fetching city data: ", error)
+        if (hideLoadingFn) hideLoadingFn();
+        if (showErrorFn) showErrorFn();
     }
 }
 

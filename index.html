@@ -67,9 +67,17 @@
       </form>
     </div>
 
+    <div id="error-message" class="error-message hidden">
+      No search result found!
+    </div>
+
     <div class="weather-grid">
       <div class="weather-grid-left">
         <div class="current-weather">
+          <div id="loading-state" class="loading-state">
+            <img src="./assets/images/icon-loading.svg" alt="Loading" class="loading-icon">
+            <p>Loading...</p>
+          </div>
           <div class="current-weather-info">
             <h4 id="cityname">City Name</h4>
             <p id="current-date">Tuesday, Aug 5, 2025</p>
@@ -91,7 +99,12 @@
         <!-- Weekly weather for several days -->
         
         <h3 class="section-header">Daily forecast</h3>
-        <div id="daily-container" class="daily-grid"></div>
+        <div id="daily-container" class="daily-grid">
+          <div id="daily-loading" class="section-loading">
+            <img src="./assets/images/icon-loading.svg" alt="Loading" class="loading-icon">
+            <p>Loading...</p>
+          </div>
+        </div>
       </div>
 
       <!-- Hourly weather for several days -->
@@ -102,7 +115,12 @@
           <select id="day-select"></select>
         </div>
 
-        <div id="hourly-container" class="hourly-scroll"></div>
+        <div id="hourly-container" class="hourly-scroll">
+          <div id="hourly-loading" class="section-loading">
+            <img src="./assets/images/icon-loading.svg" alt="Loading" class="loading-icon">
+            <p>Loading...</p>
+          </div>
+        </div>
       </div>
     </div>
 

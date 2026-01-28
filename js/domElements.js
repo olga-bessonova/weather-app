@@ -17,3 +17,7 @@ export const unitsMenu = document.getElementById("unitsMenu");
 export const tempUnitRadios = document.querySelectorAll(
     'input[name="tempUnit"]'
   );
+export const loadingState = document.getElementById("loading-state");
+export const dailyLoading = document.getElementById("daily-loading");
+export const hourlyLoading = document.getElementById("hourly-loading");
+export const errorMessage = document.getElementById("error-message");
