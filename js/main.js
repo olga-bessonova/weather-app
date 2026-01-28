@@ -82,11 +82,6 @@ function hideError() {
     if (errorMessage) {
         errorMessage.classList.add('hidden');
     }
-    // Show weather grid when hiding error (on successful search)
-    const weatherGrid = document.querySelector('.weather-grid');
-    if (weatherGrid) {
-        weatherGrid.style.display = '';
-    }
 }
 
 function updateWeatherDisplay(weatherData, clearInput = false) {
@@ -95,6 +90,11 @@ function updateWeatherDisplay(weatherData, clearInput = false) {
     
     // Hide error message on successful load
     hideError();
+    // Show weather grid only on successful load
+    const weatherGrid = document.querySelector('.weather-grid');
+    if (weatherGrid) {
+        weatherGrid.style.display = '';
+    }
     
     if (current) weatherCurrently(current, daily, cityName, country, units);
     if (daily) weatherDaily(daily, units);

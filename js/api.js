@@ -2,12 +2,13 @@ import { cityname, date, currTemp, apparentTemp, humidity, wind, precipitation }
 import { dateFormattedFull } from "./utils.js";
 
 export async function getCityLocation(city, onWeatherUpdate, showLoadingFn, hideLoadingFn, showErrorFn, hideErrorFn) {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`;
+    const query = (city || "").trim();
+    // Ask for multiple results and then require an exact match (case-insensitive)
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10`;
     console.log("url: ", url);
 
     try {
         if (showLoadingFn) showLoadingFn();
-        if (hideErrorFn) hideErrorFn();
         
         const response = await fetch(url);
         const data = await response.json();
@@ -17,15 +18,27 @@ export async function getCityLocation(city, onWeatherUpdate, showLoadingFn, hide
             if (showErrorFn) showErrorFn();
             return;
         }
-        const { latitude, longitude, name, country } = data.results[0];
+
+        const qLower = query.toLowerCase();
+        const exact = data.results.find(r => (r?.name || "").toLowerCase() === qLower);
+        if (!exact) {
+            if (hideLoadingFn) hideLoadingFn();
+            if (showErrorFn) showErrorFn();
+            return;
+        }
+
+        const { latitude, longitude, name, country } = exact;
 
         console.log(`Found: ${name}, ${country}, (${latitude}, ${longitude})`);
         const weatherData = await getWeather(latitude, longitude, name, country);
         
         if (weatherData && onWeatherUpdate) {
+            // Hide error only on success (prevents "Berlin" flashing back in)
+            if (hideErrorFn) hideErrorFn();
             onWeatherUpdate(weatherData);
-        } else if (hideLoadingFn) {
-            hideLoadingFn();
+        } else {
+            if (hideLoadingFn) hideLoadingFn();
+            if (showErrorFn) showErrorFn();
         }
       
     } catch(error){
