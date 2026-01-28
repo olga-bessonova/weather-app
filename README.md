@@ -1,6 +1,4 @@
 [Live Site URL](https://olga-bessonova.github.io/weather-app/)
-## Frontend Mentor - Weather app solution
-
 
 ## Table of contents
 
@@ -8,13 +6,10 @@
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
-- [My process](#my-process)
   - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
+
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
+
 
 ## Overview
 This is a solution to the [Weather app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49).
