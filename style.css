@@ -41,6 +41,10 @@ body {
     gap: 0.4rem;
     cursor: pointer;
   }
+#unitsBtn:hover{
+  background-color: #3b3e7a;
+}
+
   
   .unit-toggle input {
     display: none;
@@ -464,6 +468,11 @@ body {
   margin: 10px;
 }
 
+#day-select:hover{
+  background-color: #3b3e7a;
+  cursor: pointer;
+}
+
 .units-dropdown {
   position: relative;
   display: inline-block;
@@ -599,5 +608,18 @@ body {
 
 .hidden {
   display: none;
+}
+
+#search-button{
+  background-color: #2c2f58;
+  color: white;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#search-button:hover{
+  background-color: #3b3e7a;
 }
 
