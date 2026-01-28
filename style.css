@@ -17,6 +17,7 @@ body {
   background: linear-gradient(to bottom right, #000b38, #000000);
   color: white;
   font-family: "Bricolage Grotesque", sans-serif;
+  height: 100vh;
 }
 
 .title {
