@@ -20,18 +20,22 @@
     <header class="header">
       <img src="./assets/images/logo.svg" alt="">
       
-      <label class="unit-toggle">
-        <input type="checkbox" id="unitToggle"/>
-        <span class="label-text">°C</span>
-        <span class="slider"></span>
-        <span class="label-text">°F</span>
-      </label>
-
       <div class="units-dropdown">
         <button id="unitsBtn" class="units-btn">
           ⚙️ Units ▾
         </button>
         <div id="unitsMenu" class="units-menu hidden">
+          <div class="units-section units-switch-section">
+            <div class="units-toggle-container">
+             
+              <label class="units-toggle-switch">
+                <input type="checkbox" id="unitsSystemToggle"/>
+                <span class="label-text">Metric</span>
+                <span class="slider"></span>
+                <span class="units-toggle-label">Imperial</span>
+              </label>
+            </div>
+          </div>
           <div class="units-section">
             <p class="units-title">Temperature</p>
             <label><input type="radio" name="tempUnit" value="celsius" checked> Celsius (°C)</label>

@@ -511,9 +511,90 @@ body {
 .units-menu label {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   cursor: pointer;
   font-size: 0.9rem;
+  padding: 4px 0;
+  position: relative;
+}
+
+.units-menu input[type="radio"] {
+  display: none;
+}
+
+.units-menu label::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-image: url('./assets/images/icon-checkmark.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.units-menu label:has(input[type="radio"]:checked)::after {
+  opacity: 1;
+}
+
+.units-switch-section {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.units-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.units-toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.units-toggle-switch input {
+  display: none;
+}
+
+.units-toggle-switch .slider {
+  width: 40px;
+  height: 20px;
+  background: #063098;
+  border-radius: 20px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.units-toggle-switch .slider::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.units-toggle-switch input:checked ~ .slider::before {
+  transform: translateX(20px);
+}
+
+.units-toggle-switch input:checked ~ .slider {
+  background: #007bff;
+}
+
+.units-toggle-switch .label-text,
+.units-toggle-switch .units-toggle-label {
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .hidden {

@@ -55,10 +55,19 @@ async function loadWeather() {
         weatherHourly(hourly, daySelect.value, units);
     }
       
-    initUnits((partialUnits) => {
+    const updateToggleState = initUnits((partialUnits, updateToggleFn) => {
         units = { ...units, ...partialUnits };
         renderWeather();
+        // Update toggle state after units change
+        if (updateToggleFn) {
+            updateToggleFn(units);
+        }
     });
+    
+    // Initial toggle state update
+    if (updateToggleState) {
+        updateToggleState(units);
+    }
       
 
 };
